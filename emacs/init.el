@@ -15,7 +15,7 @@
 (add-to-list 'package-archives
                  '("melpa" . "http://melpa.org/packages/"))
 
-(require `all-the-icons)'
+(require `all-the-icons)
 (load-theme 'doom-palenight)
 (global-linum-mode t)
 
