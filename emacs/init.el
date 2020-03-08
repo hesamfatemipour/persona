@@ -16,7 +16,7 @@
                  '("melpa" . "http://melpa.org/packages/"))
 
 (require `all-the-icons)
-(load-theme 'doom-palenight)
+(load-theme 'doom-palenight t)
 (global-linum-mode t)
 
 
@@ -27,3 +27,17 @@
 
 (global-set-key[f8] 'neotree-toggle)
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("c83c095dd01cde64b631fb0fe5980587deec3834dc55144a6e78ff91ebc80b19" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
