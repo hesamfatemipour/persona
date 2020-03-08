@@ -1,1 +1,3 @@
-# persona
+# Persona
+
+my personal dotfile configs :}.
