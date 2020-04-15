@@ -5,39 +5,57 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 
-(package-initialize)
 
+(setq user-full-name "Hesam"
+      user-mail-address "hesaam@riseup.net")
 
-(require 'package)
-(setq inhibit-splash-screen 0)
+;; use staright.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(package-initialize)
-(add-to-list 'package-archives
-                 '("melpa" . "http://melpa.org/packages/"))
+;; installs use-package
+(straight-use-package 'use-package)
 
-(require `all-the-icons)
-(load-theme 'doom-palenight t)
-(global-linum-mode t)
+;;load theme
+(use-package doom-themes :straight t :defer t)
+(load-theme 'doom-dracula t)
 
+;; font
+(defvar hesam/font "Jetbrains Mono-11")
+(set-face-attribute 'default t :font hesam/font)
+(set-frame-font hesam/font nil t)
 
+;;mode line
+(use-package doom-modeline :straight t :config (doom-modeline-mode 1))
 
+;;vterm configuration
+(use-package vterm :straight t :bind (("C-c C-t" . vterm)))
+
+;;neotree
+(use-package neotree :straight t :bind (("<f8>" . neotree-dir)))
+
+;;magit
+(use-package magit :straight t )
+
+;;change cutome file
+(use-package cus-edit
+  :custom
+  (custom-file "~/.emacs.d/temp.el"))
+
+;; basic confs 
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 (menu-bar-mode 0)
 
-(global-set-key[f8] 'neotree-toggle)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("c83c095dd01cde64b631fb0fe5980587deec3834dc55144a6e78ff91ebc80b19" default))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; neotree 
+(global-set-key[f8] 'neotree-dir)
