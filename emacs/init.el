@@ -52,14 +52,18 @@
 (global-display-line-numbers-mode)
 
 ;; Window details
-(setq display-buffer-alist '(
-("\\*\\(Backtrace\\|Warnings\\|Compile-Log\\|Messages\\)\\*"
- (display-buffer-in-side-window)
-           (window-height . 0.16)
-           (side . top)
-           (slot . 1)
-           (window-parameters . ((no-other-window . t))))))
-
+  (setq display-buffer-alist
+        '(("\\*\\(Backtrace\\|Warnings\\|Compile-Log\\|Messages\\)\\*"
+             (display-buffer-in-side-window)
+             (window-width . 0.20)
+             (side . right)
+             (slot . 0))
+          ("^vterm.*"
+            (display-buffer-in-side-window)
+            (window-height . 0.25)
+            (side . bottom)
+	    (slot . 1)
+          )))
 ;; font
 (defvar hesam/font "Jetbrains Mono-11")
 (set-face-attribute 'default t :font hesam/font)
@@ -285,4 +289,4 @@
 
 
 ;;; init.el ends here
-x
+
