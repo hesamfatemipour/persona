@@ -39,16 +39,42 @@
 ;; installs use-package
 (straight-use-package 'use-package)
 
+;; save sessions
+(desktop-save-mode 1)
+
 ;; load theme
 (use-package doom-themes :straight t :defer t)
-(load-theme 'doom-dracula t)
-(display-line-numbers-mode 1)
+(load-theme 'doom-nord t)
+(global-display-line-numbers-mode)
 
 ;; font
 (defvar hesam/font "Jetbrains Mono-11")
 (set-face-attribute 'default t :font hesam/font)
 (set-frame-font hesam/font nil t)
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+;; icons
+(use-package all-the-icons
+  :disabled t
+  :straight t
+  :commands (all-the-icons-octicon
+	       all-the-icons-faicon
+	       all-the-icons-fileicon
+	       all-the-icons-wicon
+	       all-the-icons-material
+	       all-the-icons-alltheicon))
+
+(use-package all-the-icons-dired
+  :straight t
+
+  :disabled t
+  :init
+  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+
+;; flycheck
+(use-package flycheck
+  :straight t
+  :hook (prog-mode . flycheck-mode))
 
 ;; spacemacs mode line
 (use-package spaceline :straight t
@@ -66,7 +92,21 @@
 (use-package nyan-mode :straight t :config (nyan-mode 1))
 
 ;; vterm configuration
-(use-package vterm :straight t :bind (("C-c C-t" . vterm)))
+(use-package vterm
+  :straight t
+  :commands vterm
+  :bind (("C-c C-T" . hesam/open-vterm-vertical))
+  :config
+  (defun hesam/open-vterm-vertical ()
+    (split-window-right)
+    (interactive)
+    (switch-to-buffer-other-window (buffer-name))
+    (vterm))
+  (defun hesam/vterm-hooks () 
+    (display-line-numbers-mode -1)
+    (setq confirm-kill-processes nil)
+    (setq hscroll-margin 0))
+  (add-hook 'vterm-mode-hook 'hesam/vterm-hooks))
 
 ;; neotree
 (use-package neotree :straight t :bind (("<f8>" . neotree-dir)))
@@ -75,35 +115,8 @@
 (use-package magit
   :straight t
   :commands (magit-status)
-  :general 
-  (space-leader "g s" 'magit-status)
   :bind
   (("C-x g" . 'magit-status)))
-
-(use-package diff-hl
-  :straight t
-  :config (global-diff-hl-mode 1))
-
-(use-package
-  gitconfig-mode
-  :straight t
-  :mode "/\\.gitconfig\\'")
-
-(use-package gitignore-mode
-  :straight t
-  :mode "/\\.gitignore\\'")
-
-(use-package gitattributes-mode
-  :straight t
-  :mode "/\\.gitattributes\\'")
-
-(use-package git-messenger
-  :straight t
-  :bind
-  (("<f1> g" . git-messenger:popup-message))
-  :config
-  (setq git-messenger:show-detail t)
-  (setq git-messenger:use-magit-popup t))
 
 ;;fzf
 (use-package fzf :straight t :bind (("C-c f" . fzf-directory)))
@@ -121,9 +134,8 @@
               ("C-p" . company-select-previous)
               ("C-o" . company-other-backend)
               ("<tab>" . company-complete-common-or-cycle))
-  :config (global-company-mode t)
-  
-  )
+  :config (global-company-mode t))
+
 ;;general package
 (use-package general :straight t)
 ;; Helm ftw
@@ -186,7 +198,7 @@
 (use-package emacs
   :custom
   ; vertical scrolling
-  (scroll-step 1)
+  (scroll-step
   (scroll-margin 1)
   (scroll-conservatively 101)
   (scroll-up-aggressively 0.01)
@@ -203,4 +215,13 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 (menu-bar-mode 0)
+
+;; disable scrollbars
+(customize-set-variable 'scroll-bar-mode nil)
+(customize-set-variable 'horizontal-scroll-bar-mode nil)
+
+;; Garbage Collection
+(setq gc-cons-threshold (* 1024 1024 100)) ;; 100MB for Emacs initialization process
+(add-hook 'after-init-hook (lambda ()
+                             (setq gc-cons-threshold (* 1024 1024 20)))) ;; reseting the gc cons to 20MB
 
