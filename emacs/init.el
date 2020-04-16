@@ -1,10 +1,9 @@
 ;;; init.el --- My emacs config                      -*- lexical-binding: t; -*-
-
+;;; Commentary:
 ;; Copyright (C) 2020  Hesam
 
 ;; Author: Hesam <hesaam@riseup.net>
-;; Keywords: 
-
+;; Keywords:
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
@@ -17,11 +16,16 @@
 
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+;;; Code:
 
-;; credentials 
+;; credentials
 (setq user-full-name "Hesam"
       user-mail-address "hesaam@riseup.net")
 
+;; garbage collection
+(setq gc-cons-threshold (* 1024 1024 100)) ;; 100MB for Emacs initialization process
+(add-hook 'after-init-hook (lambda ()
+                             (setq gc-cons-threshold (* 1024 1024 20))))
 ;; use staright.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -82,7 +86,7 @@
       (require 'spaceline-config)
       (spaceline-spacemacs-theme))
 
-;; doom mode line 
+;; doom mode line
 (use-package doom-modeline :straight t
   :disabled t
     :config
@@ -102,7 +106,7 @@
     (interactive)
     (switch-to-buffer-other-window (buffer-name))
     (vterm))
-  (defun hesam/vterm-hooks () 
+  (defun hesam/vterm-hooks ()
     (display-line-numbers-mode -1)
     (setq confirm-kill-processes nil)
     (setq hscroll-margin 0))
@@ -138,6 +142,7 @@
 
 ;;general package
 (use-package general :straight t)
+
 ;; Helm ftw
  (use-package helm :straight t
      :custom
@@ -169,20 +174,20 @@
               "C-b" 'helm-mini
               ))
 
- (use-package helm-descbinds :straight t
+(use-package helm-descbinds :straight t
    :bind (("C-h b" . helm-descbinds)))
 
- (use-package helm-describe-modes :straight t
+(use-package helm-describe-modes :straight t
    :bind (("C-h m" . helm-describe-modes)))
 
 (use-package helm-make :straight t
   :bind (("<f5> m" . helm-make)))
 
 ;;language server protocol
-(use-package lsp-mode 
+(use-package lsp-mode
   :straight t
   :commands (lsp lsp-deferred)
-  :hook 
+  :hook
   (prog-mode . lsp)
   :custom
   (lsp-auto-guess-root t)
@@ -198,7 +203,7 @@
 (use-package emacs
   :custom
   ; vertical scrolling
-  (scroll-step
+  (scroll-step 1)
   (scroll-margin 1)
   (scroll-conservatively 101)
   (scroll-up-aggressively 0.01)
@@ -211,17 +216,9 @@
   (hscroll-step 1)
   (hscroll-margin 1))
 
-;; removes toolbars 
+;; removes toolbars
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 (menu-bar-mode 0)
 
-;; disable scrollbars
-(customize-set-variable 'scroll-bar-mode nil)
-(customize-set-variable 'horizontal-scroll-bar-mode nil)
-
-;; Garbage Collection
-(setq gc-cons-threshold (* 1024 1024 100)) ;; 100MB for Emacs initialization process
-(add-hook 'after-init-hook (lambda ()
-                             (setq gc-cons-threshold (* 1024 1024 20)))) ;; reseting the gc cons to 20MB
-
+;;; init.el ends here
