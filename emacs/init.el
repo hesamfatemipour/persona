@@ -51,6 +51,15 @@
 (load-theme 'doom-nord t)
 (global-display-line-numbers-mode)
 
+;; Window details
+(setq display-buffer-alist '(
+("\\*\\(Backtrace\\|Warnings\\|Compile-Log\\|Messages\\)\\*"
+ (display-buffer-in-side-window)
+           (window-height . 0.16)
+           (side . top)
+           (slot . 1)
+           (window-parameters . ((no-other-window . t))))))
+
 ;; font
 (defvar hesam/font "Jetbrains Mono-11")
 (set-face-attribute 'default t :font hesam/font)
@@ -193,6 +202,17 @@
   (lsp-auto-guess-root t)
   :commands (lsp))
 
+;; show parentheses
+(show-paren-mode 1)
+(setq show-paren-delay 0)
+
+;;ibuffer
+(use-package ibuffer :bind (("C-x C-b" . 'ibuffer)))
+
+;; ibuffer projectile
+(use-package ibuffer-projectile
+  :straight t
+  :hook (ibuffer . ibuffer-projectile-set-filter-groups))
 
 ;; change cutome file
 (use-package cus-edit
@@ -220,5 +240,49 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 (menu-bar-mode 0)
+;; confs
+(use-package exec-path-from-shell :straight t
+  :config ( exec-path-from-shell-initialize))
+
+(use-package files
+    :config
+    (run-with-idle-timer 1 nil (lambda () (save-buffer) )))
+;; langs
+
+;; python
+(use-package python-mode
+  :mode "\\.py\\'"
+  :config
+  (defun hesam/python-insert-docstring ()
+    (interactive)
+    (insert "'''\n'''")
+    (previous-line))
+  (amirreza/with-backends python-mode (company-capf))
+  :bind
+  (:map python-mode-map
+	("C-c l p d" . hesam/python-insert-docstring)))
+
+;; microsoft lsp
+(use-package lsp-python-ms :straight t)
+
+;; auto pep8
+(use-package py-autopep8
+  :straight t
+  :hook python-mode
+  :config
+  (py-autopep8-enable-on-save))
+
+;; go
+(use-package go-mode
+  :straight t
+  :mode ("\\.go\\'" . go-mode)
+  :init
+  (add-hook 'go-mode-hook (lambda () (add-to-list 'exec-path (concat (getenv "HOME") "/go"))))
+  :config
+  (add-hook 'go-mode-hook (lambda () (interactive)
+                            (add-hook 'before-save-hook 'lsp-format-buffer t t)
+                            (add-hook 'before-save-hook 'lsp-organize-imports t t))))
+
 
 ;;; init.el ends here
+x
