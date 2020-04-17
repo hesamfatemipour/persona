@@ -105,7 +105,7 @@
     :config
     (doom-modeline-mode 1))
 
-;; neyan mode
+;; nyan mode
 (use-package nyan-mode :straight t :config (nyan-mode 1))
 
 ;; vterm configuration
@@ -244,6 +244,7 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 (menu-bar-mode 0)
+
 ;; confs
 (use-package exec-path-from-shell :straight t
   :config ( exec-path-from-shell-initialize))
