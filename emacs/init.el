@@ -65,9 +65,11 @@
 	    (slot . 1)
           )))
 ;; font
-(defvar hesam/font "Jetbrains Mono-11")
-(set-face-attribute 'default t :font hesam/font)
-(set-frame-font hesam/font nil t)
+;;(defvar hesam/font "Jetbrains Mono-11")
+;;(set-face-attribute 'default t :font hesam/font)
+;;(set-frame-font hesam/font nil t)
+
+;;Aliases
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; icons
@@ -104,6 +106,10 @@
   :disabled t
     :config
     (doom-modeline-mode 1))
+
+
+;; eybrowse
+(use-package eyebrowse :straight t :config (eyebrowse-mode +1))
 
 ;; nyan mode
 (use-package nyan-mode :straight t :config (nyan-mode 1))
