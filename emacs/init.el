@@ -107,9 +107,8 @@
     :config
     (doom-modeline-mode 1))
 
-
 ;; eybrowse
-(use-package eyebrowse :straight t :config (eyebrowse-mode +1))
+ (use-package eyebrowse :straight t :config (eyebrowse-mode +1))
 
 ;; nyan mode
 (use-package nyan-mode :straight t :config (nyan-mode 1))
@@ -132,15 +131,16 @@
   (add-hook 'vterm-mode-hook 'hesam/vterm-hooks))
 
 ;; neotree
-;;(use-package neotree :straight t :bind (("<f8>" . neotree-dir)))
+(use-package neotree :straight t :bind (("<f8>" . neotree-dir)))
 
-(use-package dired-sidebar :straight t
-      :bind
-      (("<f8>" . dired-sidebar-toggle-sidebar)))
-    (use-package dired-subtree
-      :straight t
-      :bind (:map dired-mode-map
-                  ("<tab>" . dired-subtree-toggle)))
+;; (use-package dired-sidebar :straight t
+;; :bind
+;;       (("<f8>" . dired-sidebar-toggle-sidebar)))
+;;     (use-package dired-subtree
+;;       :straight t
+;;      :bind (:map dired-mode-map
+;;                  ("<tab>" . dired-subtree-toggle)))
+
 
 ;; magit
 (use-package magit
@@ -250,6 +250,7 @@
   (fast-but-imprecise-scrolling nil)
   (mouse-wheel-scroll-amount '(1 ((shift) . 1)))
   (mouse-wheel-progressive-speed t)
+  
   ;; Horizontal Scroll
   (hscroll-step 1)
   (hscroll-margin 1))
@@ -261,7 +262,7 @@
 
 ;; confs
 (use-package exec-path-from-shell :straight t
-  :config ( exec-path-from-shell-initialize))
+  :config (exec-path-from-shell-initialize))
 
 (use-package files
     :config
