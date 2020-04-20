@@ -48,7 +48,7 @@
 
 ;; load theme
 (use-package doom-themes :straight t :defer t)
-(load-theme 'doom-nord t)
+(load-theme 'doom-dracula t)
 (global-display-line-numbers-mode)
 
 ;; Window details
@@ -132,7 +132,15 @@
   (add-hook 'vterm-mode-hook 'hesam/vterm-hooks))
 
 ;; neotree
-(use-package neotree :straight t :bind (("<f8>" . neotree-dir)))
+;;(use-package neotree :straight t :bind (("<f8>" . neotree-dir)))
+
+(use-package dired-sidebar :straight t
+      :bind
+      (("<f8>" . dired-sidebar-toggle-sidebar)))
+    (use-package dired-subtree
+      :straight t
+      :bind (:map dired-mode-map
+                  ("<tab>" . dired-subtree-toggle)))
 
 ;; magit
 (use-package magit
@@ -283,7 +291,7 @@
   :config
   (py-autopep8-enable-on-save))
 
-;; go
+;; go (require installing gopls)
 (use-package go-mode
   :straight t
   :mode ("\\.go\\'" . go-mode)
@@ -294,6 +302,8 @@
                             (add-hook 'before-save-hook 'lsp-format-buffer t t)
                             (add-hook 'before-save-hook 'lsp-organize-imports t t))))
 
+;; lua mode (requires installing lsp for lua)
+(use-package lua-mode :straight t :mode "\.lua\'")
 
 ;;; init.el ends here
 
