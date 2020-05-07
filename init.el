@@ -26,7 +26,7 @@
 (setq gc-cons-threshold (* 1024 1024 100)) ;; 100MB for Emacs initialization process
 (add-hook 'after-init-hook (lambda ()
                              (setq gc-cons-threshold (* 1024 1024 20))))
-;; use staright.el
+;; use staright.el as package manager
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -49,6 +49,8 @@
 ;; load theme
 (use-package doom-themes :straight t :defer t)
 (load-theme 'doom-dracula t)
+
+;; line numbers
 (global-display-line-numbers-mode)
 
 ;; Window details
@@ -72,7 +74,7 @@
 ;;Aliases
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; icons
+;; all the icons
 (use-package all-the-icons
   :disabled t
   :straight t
@@ -85,7 +87,6 @@
 
 (use-package all-the-icons-dired
   :straight t
-
   :disabled t
   :init
   (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
@@ -110,7 +111,7 @@
 ;; eybrowse
  (use-package eyebrowse :straight t :config (eyebrowse-mode +1))
 
-;; nyan mode
+;; nyan mode(the cat)
 (use-package nyan-mode :straight t :config (nyan-mode 1))
 
 ;; vterm configuration
@@ -133,15 +134,6 @@
 ;; neotree
 (use-package neotree :straight t :bind (("<f8>" . neotree-dir)))
 
-;; (use-package dired-sidebar :straight t
-;; :bind
-;;       (("<f8>" . dired-sidebar-toggle-sidebar)))
-;;     (use-package dired-subtree
-;;       :straight t
-;;      :bind (:map dired-mode-map
-;;                  ("<tab>" . dired-subtree-toggle)))
-
-
 ;; magit
 (use-package magit
   :straight t
@@ -149,10 +141,10 @@
   :bind
   (("C-x g" . 'magit-status)))
 
-;;fzf
+;; fzf
 (use-package fzf :straight t :bind (("C-c f" . fzf-directory)))
 
-;;company
+;; company
 (use-package company :straight t
   :custom
   (company-echo-delay 0.1)
@@ -167,50 +159,19 @@
               ("<tab>" . company-complete-common-or-cycle))
   :config (global-company-mode t))
 
-;;general package
+;; general package
 (use-package general :straight t)
 
 ;; Helm ftw
- (use-package helm :straight t
-     :custom
-     (helm-mode-fuzzy-match t) ;; enable fuzzy matching in all helm
-     :general
-     (:keymaps 'helm-map
-               "C-j" 'helm-next-line
-               "C-k" 'helm-previous-line
-               "<tab>"  'helm-execute-persistent-action   ;; make tab work normal
-               "C-z"  'helm-select-action) ;; C-z instead of tab to show helm actions
+;; Helm
+(use-package helm
+  :ensure t
+  :init
+  (setq helm-mode-fuzzy-match t)
+  (setq helm-completion-in-region-fuzzy-match t)
+  (setq helm-candidate-number-list 50))
 
-     (:keymaps 'override
-               "M-y" 'helm-show-kill-ring
-               "M-x" 'helm-M-x
-               "C-s" 'helm-occur)
-
-     (:keymaps 'override
-               "<f6> g" 'helm-rg)
-
-     (:prefix "C-h"
-              "a" 'helm-apropos
-              "f" 'helm-apropos
-              "k" 'helm-apropos
-              "v" 'helm-apropos
-              )
-     (:prefix "C-x" :keymaps 'override
-              "C-f" 'helm-find-files
-              "b" 'helm-mini
-              "C-b" 'helm-mini
-              ))
-
-(use-package helm-descbinds :straight t
-   :bind (("C-h b" . helm-descbinds)))
-
-(use-package helm-describe-modes :straight t
-   :bind (("C-h m" . helm-describe-modes)))
-
-(use-package helm-make :straight t
-  :bind (("<f5> m" . helm-make)))
-
-;;language server protocol
+;;language server protocol(lsp)
 (use-package lsp-mode
   :straight t
   :commands (lsp lsp-deferred)
@@ -255,7 +216,7 @@
   (hscroll-step 1)
   (hscroll-margin 1))
 
-;; removes toolbars
+;; removes toolbars for minimal theme
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 (menu-bar-mode 0)
@@ -267,9 +228,10 @@
 (use-package files
     :config
     (run-with-idle-timer 1 nil (lambda () (save-buffer) )))
-;; langs
 
-;; python
+;; language compatability
+
+;; Python
 (use-package python-mode
   :mode "\\.py\\'"
   :config
@@ -282,7 +244,7 @@
   (:map python-mode-map
 	("C-c l p d" . hesam/python-insert-docstring)))
 
-;; microsoft lsp
+;; Microsoft lsp
 (use-package lsp-python-ms :straight t)
 
 ;; auto pep8
@@ -292,7 +254,7 @@
   :config
   (py-autopep8-enable-on-save))
 
-;; go (require installing gopls)
+;; go
 (use-package go-mode
   :straight t
   :mode ("\\.go\\'" . go-mode)
