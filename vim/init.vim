@@ -36,6 +36,7 @@ set autochdir
 set encoding=utf-8
 
 " Nerdtree
+let NERDTreeShowHidden=1
 autocmd vimenter * NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd StdinReadPre * let s:std_in=1
