@@ -14,10 +14,8 @@ Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
 Plug 'kien/ctrlp.vim'
+Plug 'Chiel92/vim-autoformat'
 call plug#end()
 
 " General Vim Config
@@ -35,19 +33,16 @@ set backspace=indent,eol,start
 set autochdir
 set encoding=utf-8
 
+inoremap jk <ESC>
+
 " Nerdtree
 let NERDTreeShowHidden=1
-autocmd vimenter * NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
-
-" Vim Airline
-let g:airline_powerline_fonts = 1
-let g:airline_theme='papercolor'
+map <C-n> :NERDTreeToggle<CR>
 
 " Python Configurations 
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+let g:formatter_yapf_style = 'pep8'
+noremap <F2> :Autoformat<CR>
 
+"Coc
 source ~/.config/nvim/coc.vim
 let g:coc_global_extensions = ['coc-go', 'coc-python']
