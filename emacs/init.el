@@ -34,10 +34,10 @@
 (package-initialize)
 
 ;; Theme
-(use-package base16-theme
+;; (use-package base16-theme
   :ensure t
   :config
-  (load-theme 'darkburn t))
+  (load-theme 'base16-default-dark t)
 
 ;; Font
 (set-face-attribute 'default nil
@@ -55,8 +55,6 @@
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1))
-(setq doom-modeline-bar-width 1)
-(setq doom-modeline-project-detection 'project)
 (setq doom-modeline-env-enable-python t)
 (setq doom-modeline-env-enable-go t)
 
@@ -83,13 +81,11 @@
 (scroll-bar-mode 0)
 (menu-bar-mode 0)
 (show-paren-mode 1)
+(delete-selection-mode 1)
+(setq confirm-kill-processes nil)
 (setq show-paren-delay 0)
 (global-display-line-numbers-mode)
 (setq byte-compile-warnings '(cl-functions))
-(global-set-key (kbd "C-x <up>") 'windmove-up)
-(global-set-key (kbd "C-x <down>") 'windmove-down)
-(global-set-key (kbd "C-x <left>") 'windmove-left)
-(global-set-key (kbd "C-x <right>") 'windmove-right)
 
 (use-package undo-tree
   :ensure t
@@ -119,6 +115,31 @@
 (use-package counsel
   :ensure t
   )
+(use-package ivy
+  :ensure t
+  :diminish (ivy-mode)
+  :bind (("C-x b" . ivy-switch-buffer))
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "%d/%d ")
+  (setq ivy-display-style 'fancy))
+
+
+  (use-package swiper
+  :ensure t
+  :bind (("C-s" . swiper-isearch)
+	 ("C-r" . swiper-isearch)
+	 ("C-c C-r" . ivy-resume)
+	 ("M-x" . counsel-M-x)
+	 ("C-x C-f" . counsel-find-file))
+  :config
+  (progn
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-display-style 'fancy)
+    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
+    ))
 
 (use-package swiper
   :ensure try
@@ -132,7 +153,7 @@
 ;; FZF
 (use-package fzf
   :ensure  t
-  :bind (("C-c f" . fzf-directory)))
+  :bind (("C-c f" . fzf)))
 
 ;; RG
 (use-package rg
@@ -145,14 +166,13 @@
   :init
   (global-flycheck-mode t))
 
-(use-package jedi
+;;Python
+(use-package lsp-python-ms
   :ensure t
-  :init
-  (add-hook 'python-mode-hook 'jedi:setup)
-  (add-hook 'python-mode-hook 'jedi:ac-setup))
+  )
 
 (use-package py-autopep8
-  :ensure  t
+  :ensure t
   :hook python-mode
   :config
   (py-autopep8-enable-on-save))
