@@ -3,10 +3,9 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/$USER/.oh-my-zsh"
-#Go Path
 export PATH=$PATH:/usr/local/go/bin
-export GOPATH=$HOME/go
-export GOROOT=/usr/local/go
+export NVM_DIR="$HOME/.nvm"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -15,7 +14,10 @@ export GOROOT=/usr/local/go
 ZSH_THEME="fishy"
 
 #Aliases
-alias vim=nvim
+alias vi=vim
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -75,7 +77,7 @@ alias vim=nvim
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 

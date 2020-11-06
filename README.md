@@ -1,3 +1,3 @@
 # Persona
 
-My personal dotfile configs.
+My personal dotfiles .
