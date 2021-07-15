@@ -6,29 +6,12 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "Hesam Fatemipour"
+(setq user-full-name "Hesam Fatemioiur"
       user-mail-address "hesamfatemipour@gmail.com")
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;;
-
+;; theme and font
 (setq doom-font (font-spec :family "Ubuntu Mono derivative Powerline" :size 16))
-
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-spacegrey)
+(setq doom-theme 'doom-miramare)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -36,11 +19,27 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type t)
 
-(setq display-line-numbers-type t)      ;; line numbers
-(setq git-gutter-mode t)                ;; git diff
+(setq git-gutter-mode t)
 
-(setq lsp-enable-links nil)             ;; enable lsp
+(after! python
+  (setq python-shell-interpreter "python3"))
+
+(after! lsp-python-ms
+  (set-lsp-priority! 'mspyls 1))
+
+(after! company
+  (setq company-idle-delay 0
+        company-minimum-prefix-length 2))
+
+(after! neotree
+  (setq doom-themes-neotree-file-icons 'icons)
+  (setq doom-themes-neotree-enable-file-icons 'icons)
+  (setq neo-theme 'icons))
+
+(after! doom-themes
+  (setq doom-neotree-file-icons t))
 
 (use-package! lsp-mode
   :hook
@@ -56,19 +55,3 @@
                     :server-id 'reason-ls))
   :commands
   lsp)
-
-(after! company
-  (setq company-idle-delay 0))          ;; disable company delay
-
-(after! neotree
-  (setq doom-themes-neotree-file-icons 'icons)
-  (setq doom-themes-neotree-enable-file-icons 'icons)
-  (setq neo-theme 'icons))
-
-(after! doom-themes
-  (setq doom-neotree-file-icons t))
-
-(after! python
-  (setq python-shell-interpreter "python3"))
-
-;;; init.el ends here
