@@ -1,19 +1,25 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
 (setq user-full-name "Hesam Fatemioiur"
       user-mail-address "hesamfatemipour@gmail.com")
 
 ;; theme and font
 (setq doom-font (font-spec :family "Ubuntu Mono derivative Powerline" :size 16))
+
 (setq doom-theme 'doom-zenburn)
 
-(set-background-color "#000000")
+(if (display-graphic-p)
+    (setq initial-frame-alist
+          '(
+            (tool-bar-lines . 0)
+            (width . 106)
+            (height . 50)
+            (background-color . "black")
+            (left . 50)
+            (top . 50)))
+  (setq initial-frame-alist '( (tool-bar-lines . 0))))
+
+(setq default-frame-alist initial-frame-alist)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -23,6 +29,7 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 (setq-default history-length 1000)
+
 (setq-default prescient-history-length 1000)
 
 (setq git-gutter-mode t)
