@@ -1,0 +1,18 @@
+[cursor]
+style = "Underline"
+
+[font]
+size = 17.0
+
+[font.normal]
+family = "UbuntuMono Nerd Font"
+
+[window]
+startup_mode = "Windowed"
+dynamic_padding = true
+opacity = 1.0
+decorations= "Full"
+title = "Terminal"
+[window.padding]
+x = 6
+y = 1

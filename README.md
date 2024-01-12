@@ -1,3 +1,3 @@
 # Persona
 
-## personal dotfiles.
+## Personal dotfiles repository 
