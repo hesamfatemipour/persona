@@ -5,7 +5,7 @@ style = "Underline"
 size = 17.0
 
 [font.normal]
-family = "UbuntuMono Nerd Font"
+family = "Ubuntu Mono derivative powerline"
 
 [window]
 startup_mode = "Windowed"
