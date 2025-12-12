@@ -1,1 +1,0 @@
-/Users/hesamfatemi/.config/doom/init.el
